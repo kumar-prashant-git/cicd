@@ -5,6 +5,15 @@ commands:
       - run: echo ${CIRCLE_WORKFLOW_ID}
 
 jobs:
+  my_job1:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: exit 1
+      - run:
+          name: on error
+          command: echo "heelo Error"
+          when: on_fail
   my_job:
     docker:
       - image: circleci/node:13.8.0
@@ -32,6 +41,7 @@ jobs:
 workflows:
   my_workflow:
     jobs:
+      - my_job1
       - my_job
       - save_hello_world_output
       - print_output_file:
